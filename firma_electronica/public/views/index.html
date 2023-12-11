@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firma de PDF</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+    <h1>Firma de PDF</h1>
+    <p>Seleccione un documento PDF para firmar:</p>
+
+    <form action="/sign-pdf" method="post" enctype="multipart/form-data">
+        <input type="file" name="archivo" id="archivo" accept=".pdf">
+        <input type="submit" value="Subir PDF" name="submit">
+    </form>
+
+    <script src="server.js"></script>
+</body>
+</html>
