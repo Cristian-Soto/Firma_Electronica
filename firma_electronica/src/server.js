@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const multer = require("multer");
 const fs = require('fs').promises;
-const { sign } = require('pdf-signer');
+const { sign, verifySignature  } = require('pdf-signer');
 
 const app = express();
 const port = 3000;
@@ -68,6 +68,27 @@ app.post("/sign-pdf", upload.single("archivo"), async (req, res) => {
     } catch (err) {
         console.error("Error al firmar el documento:", err);
         res.status(500).send(`Error al firmar el documento: ${err.message}`);
+    }
+});
+
+app.post("/validate-pdf", upload.single("archivo"), async (req, res) => {
+    try {
+        const pdfBuffer = await fs.readFile(req.file.path);
+        
+        // Aquí asumimos que tienes la clave pública o el certificado para verificar la firma
+        // Debes reemplazar 'publicKeyBuffer' con tu clave pública real
+        const publicKeyBuffer = await fs.readFile('path_to_your_public_key_or_certificate');
+
+        const isValid = verifySignature(pdfBuffer, publicKeyBuffer);
+
+        if (isValid) {
+            res.send("La firma del documento es válida");
+        } else {
+            res.status(400).send("La firma del documento no es válida");
+        }
+    } catch (err) {
+        console.error("Error al validar la firma del documento:", err);
+        res.status(500).send(`Error al validar la firma del documento: ${err.message}`);
     }
 });
 
