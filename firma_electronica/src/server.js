@@ -72,7 +72,7 @@ app.post("/sign-pdf", upload.single("archivo"), async (req, res) => {
     }
 });
 
-app.post("/validate-pdf", upload.single("validate-arch"), async (req, res) => {
+/*app.post("/validate-pdf", upload.single("validate-arch"), async (req, res) => {
     try {
         const pdfBuffer = await fs.readFile(req.file.path);
         
@@ -91,7 +91,7 @@ app.post("/validate-pdf", upload.single("validate-arch"), async (req, res) => {
         console.error("Error al validar la firma del documento:", err);
         res.status(500).send(`Error al validar la firma del documento: ${err.message}`);
     }
-});
+});*/
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);

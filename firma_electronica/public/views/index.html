@@ -7,22 +7,48 @@
     <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
-    <h2>Firma de PDF</h2>
-    <p>Seleccione un documento PDF para firmar:</p>
+    <div class="container">
+        <h2>Firma de PDF</h2>
+        <p>Seleccione un documento PDF para firmar:</p>
 
-    <form action="/sign-pdf" method="post" enctype="multipart/form-data">
-        <input type="file" name="archivo" id="archivo" accept=".pdf">
-        <input type="submit" value="Subir PDF" name="submit">
-    </form>
+        <form action="/sign-pdf" method="post" enctype="multipart/form-data">
+            <label for="archivo" class="file-label">
+                <input type="file" name="archivo" id="archivo" accept=".pdf">
+                Subir PDF
+            </label>
+            <button type="submit">Firmar PDF</button>
+        </form>
 
-    <!--<h2>Validacion de Firma</h2>
-    <p>Seleccione un documento PDF para validar:</p>
+        <!--<h2>Validacion de Firma</h2>
+        <p>Seleccione un documento PDF para validar:</p>
 
-    <form action="/validate-pdf" method="post" enctype="multipart/form-data">
-        <input type="file" name="validate-arch" id="validate-arch" accept=".pdf">
-        <input type="submit" value="Validar PDF" name="submit">
-    </form>-->
+        <form action="/validate-pdf" method="post" enctype="multipart/form-data">
+            <label for="validate-arch" class="file-label">
+                <input type="file" name="validate-arch" id="validate-arch" accept=".pdf">
+                Validar PDF
+            </label>
+            <button type="submit">Validar PDF</button>
+        </form>-->
 
-    <script src="server.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+        $(document).ready(function(){
+          $("form").on("submit", function(event){
+            event.preventDefault();
+
+            $.ajax({
+              url: '/sign-pdf', // La ruta a tu endpoint de firma de PDF
+              type: 'POST',
+              data: new FormData(this),
+              processData: false,
+              contentType: false,
+              success: function(data){
+                alert(data); // Muestra un mensaje con la respuesta del servidor
+              }
+            });
+          });
+        });
+        </script>
+    </div>
 </body>
 </html>
