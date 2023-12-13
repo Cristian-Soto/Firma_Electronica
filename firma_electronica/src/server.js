@@ -2,7 +2,8 @@ const express = require("express");
 const path = require("path");
 const multer = require("multer");
 const fs = require('fs').promises;
-const { sign, verifySignature  } = require('pdf-signer');
+const { sign } = require('pdf-signer');
+const { verifySignature  } = require('pdf-signer');
 
 const app = express();
 const port = 3000;
@@ -71,13 +72,13 @@ app.post("/sign-pdf", upload.single("archivo"), async (req, res) => {
     }
 });
 
-app.post("/validate-pdf", upload.single("archivo"), async (req, res) => {
+app.post("/validate-pdf", upload.single("validate-arch"), async (req, res) => {
     try {
         const pdfBuffer = await fs.readFile(req.file.path);
         
         // Aquí asumimos que tienes la clave pública o el certificado para verificar la firma
         // Debes reemplazar 'publicKeyBuffer' con tu clave pública real
-        const publicKeyBuffer = await fs.readFile('path_to_your_public_key_or_certificate');
+        const publicKeyBuffer = await fs.readFile('./certificado/public_key.pem');
 
         const isValid = verifySignature(pdfBuffer, publicKeyBuffer);
 
